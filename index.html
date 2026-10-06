@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Kaia Kookies — Cookies artisanaux à Lyon</title>
+<meta name="description" content="Kaia Kookies — cookies artisanaux à Lyon. Tous nos cookies sont à 3 €. Commande en ligne.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Playwrite+AU+QLD:wght@100..400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header><nav class="nav"><a class="logo" href="index.html">Kaia Kookies<span>♥</span></a><div class="navlinks"><a class="active" href="#accueil">Accueil</a><a href="#cookies">Cookies</a><a href="#apropos">À propos</a><a href="panier.html">Panier <span class="count" data-count>0</span></a></div></nav></header>
+<main class="wrap" id="accueil">
+<section class="hero">
+<div class="hero-copy"><div class="brand-line"><span class="brand-script">Kaia Kookies</span></div><div class="eyebrow">COOKIES ARTISANAUX · LYON</div><h1>Plus qu'un cookie,<br><span>une vraie gourmandise.</span></h1><p>Des cookies généreux, préparés avec passion à Lyon. Chaque cookie est à <strong>3 €</strong>.</p><div class="hero-actions"><a class="btn" href="#cookies">Commander mes cookies</a><a class="btn light" href="#apropos">Découvrir la marque</a></div><div class="hero-signature">Fait avec passion ♥ · Lyon, France</div></div>
+<div class="heroimg kaia-heroimg"><div class="splash splash-a"></div><div class="splash splash-b"></div><div class="hero-cookie-frame"><img src="hero.jpg" alt="Cookie Kaia Kookies"><span class="hero-badge">3 €</span></div></div>
+</section>
+<section class="intro-banner"><div><span class="script-small">La carte</span><h2>Des cookies faits maison à Lyon</h2><p>Des recettes gourmandes, généreuses et préparées avec soin. Choisis tes cookies et commande en quelques clics.</p></div><div class="heart-mark">♥</div></section>
+<section id="cookies"><div class="title"><span class="script-small">La carte</span><h2>Choisis ton cookie préféré</h2><p>Tous nos cookies sont à 3 € pièce.</p></div><div class="grid" id="products"></div></section>
+<section id="apropos" class="panel" style="margin-top:52px"><div class="title"><span class="script-small">Notre histoire</span><h2>Fait avec amour à Lyon</h2></div><p style="max-width:780px;margin:auto;text-align:center;line-height:1.8;color:#6d5040">Kaia Kookies, c'est une petite aventure gourmande autour de cookies généreux et réconfortants. Cette boutique te permet de choisir tes cookies, de préparer ton panier et de passer ta commande simplement.</p></section>
+<section class="social-strip"><div><span class="script-small">Kaia Kookies</span><strong>Des cookies qui font craquer ♥</strong></div><span>📍 Lyon, France</span></section>
+</main>
+<footer><div class="foot"><strong>Kaia Kookies</strong><span>Cookies artisanaux · Lyon, France</span><span>© <span id="year"></span> Kaia Kookies</span></div></footer>
+<div class="toast" id="toast">Cookie ajouté au panier 🍪</div>
+<script src="app.js"></script><script>renderHome();</script>
+</body></html>

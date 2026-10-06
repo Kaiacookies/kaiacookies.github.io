@@ -1,0 +1,23 @@
+const PRODUCTS=[
+ {id:'choco',name:'Chocolat intense',desc:'Cookie généreux au chocolat, fondant au centre.',image:'hero.jpg'},
+ {id:'lotus',name:'Lotus gourmand',desc:'Cookie croustillant et gourmand aux notes de spéculoos.',image:'menu-prix.jpg'},
+ {id:'kinder',name:'Kinder',desc:'Une recette ultra gourmande pour les amoureux du chocolat.',image:'hero.jpg'},
+ {id:'oreo',name:'Oreo',desc:'Cookie chocolaté avec une touche biscuitée irrésistible.',image:'menu-prix.jpg'},
+ {id:'caramel',name:'Caramel beurre salé',desc:'Le mélange fondant, doux et légèrement salé.',image:'hero.jpg'},
+ {id:'white',name:'Chocolat blanc',desc:'Douceur chocolatée et cœur généreux.',image:'menu-prix.jpg'}
+];
+const PRICE=3;
+const money=n=>new Intl.NumberFormat('fr-FR',{style:'currency',currency:'EUR'}).format(n);
+function getCart(){try{return JSON.parse(localStorage.getItem('kaiaCart')||'{}')}catch{return {}}}
+function saveCart(c){localStorage.setItem('kaiaCart',JSON.stringify(c));updateCount()}
+function updateCount(){const c=getCart();const n=Object.values(c).reduce((a,b)=>a+b,0);document.querySelectorAll('[data-count]').forEach(e=>e.textContent=n)}
+function add(id){const c=getCart();c[id]=(c[id]||0)+1;saveCart(c);toast('Cookie ajouté au panier 🍪')}
+function remove(id){const c=getCart();delete c[id];saveCart(c);renderCart()}
+function change(id,d){const c=getCart();c[id]=Math.max(0,(c[id]||0)+d);if(!c[id])delete c[id];saveCart(c);renderCart()}
+function toast(t){const e=document.getElementById('toast');if(!e)return; e.textContent=t;e.classList.add('show');setTimeout(()=>e.classList.remove('show'),1800)}
+function productCard(p){return `<article class="card product-card"><div class="pic"><img src="${p.image}" alt="${p.name}"></div><div class="body"><span class="tag">Cookie artisanal</span><h3>${p.name}</h3><div class="desc">${p.desc}</div><div class="row"><span class="price">${money(PRICE)}</span><button class="add" onclick="add('${p.id}')">Ajouter</button></div></div></article>`}
+function renderHome(){document.getElementById('products').innerHTML=PRODUCTS.map(productCard).join('');document.getElementById('year').textContent=new Date().getFullYear();updateCount()}
+function cartData(){const c=getCart();return PRODUCTS.filter(p=>c[p.id]).map(p=>({...p,qty:c[p.id],total:c[p.id]*PRICE}))}
+function renderCart(){updateCount();const el=document.getElementById('cart');const items=cartData();if(!items.length){el.innerHTML=`<div class="panel empty-cart"><div class="heart-mark">♥</div><h3>Ton panier est vide</h3><p>Choisis tes cookies préférés pour commencer.</p><a class="btn" href="index.html#cookies">Voir les cookies</a></div>`;return}const total=items.reduce((a,p)=>a+p.total,0);el.innerHTML=`<div class="panel cart-panel">${items.map(p=>`<div class="cart-item"><img src="${p.image}" alt="${p.name}"><div class="cart-item-info"><strong>${p.name}</strong><div>${money(PRICE)} / pièce</div></div><div class="qty"><button onclick="change('${p.id}',-1)">−</button><span>${p.qty}</span><button onclick="change('${p.id}',1)">+</button></div><strong>${money(p.total)}</strong><button class="add" onclick="remove('${p.id}')">×</button></div>`).join('')}<div class="cart-total"><span>Total</span><span>${money(total)}</span></div><div class="cart-actions"><a class="btn light" href="index.html#cookies">Continuer mes achats</a><a class="btn" href="commande.html">Commander</a></div></div>`}
+function renderCheckout(){updateCount();const items=cartData(), el=document.getElementById('orderSummary');if(!items.length){el.innerHTML='<p>Ton panier est vide.</p><a class="btn" href="index.html#cookies">Voir les cookies</a>';return}const total=items.reduce((a,p)=>a+p.total,0);el.innerHTML=items.map(p=>`<div class="mini-line"><span>${p.name} × ${p.qty}</span><strong>${money(p.total)}</strong></div>`).join('')+`<div class="cart-total"><span>Total</span><span>${money(total)}</span></div>`;document.getElementById('orderForm').addEventListener('submit',e=>{e.preventDefault();const data=Object.fromEntries(new FormData(e.target));const code='KK-'+Math.random().toString(36).slice(2,8).toUpperCase();localStorage.removeItem('kaiaCart');updateCount();document.querySelector('main').innerHTML=`<div class="panel success" style="max-width:760px;margin:60px auto;text-align:center"><div class="heart-mark">♥</div><h2>Commande préparée !</h2><p>Merci ${data.prenom} ♥</p><p>Numéro de commande :</p><div class="order-code">${code}</div><p>Ta commande de ${money(total)} est enregistrée sur cet appareil. Pour la finaliser, contacte Kaia Kookies avec ce numéro et les informations saisies.</p><a class="btn" href="index.html">Retour à la boutique</a></div>`})}
+updateCount();
